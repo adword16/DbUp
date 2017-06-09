@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DbUp.Engine;
+using DbUp.Engine.Locking;
 using DbUp.Engine.Output;
 using DbUp.Engine.Transactions;
 
@@ -21,6 +22,7 @@ namespace DbUp.Builder
         public UpgradeConfiguration()
         {
             Log = new TraceUpgradeLog();
+            LockManager = new NullLockManager();
             VariablesEnabled = true;
         }
 
@@ -34,6 +36,8 @@ namespace DbUp.Builder
         /// </summary>
         public IUpgradeLog Log { get; set; }
 
+
+        public ILockManager LockManager { get; set; }
         /// <summary>
         /// Gets a mutable list of script providers.
         /// </summary>

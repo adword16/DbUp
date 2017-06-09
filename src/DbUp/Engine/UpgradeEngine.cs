@@ -54,6 +54,9 @@ namespace DbUp.Engine
 
                     configuration.Log.WriteInformation("Beginning database upgrade");
 
+
+                    configuration.LockManager.Lock();
+
                     var scriptsToExecute = GetScriptsToExecuteInsideOperation();
 
                     if (scriptsToExecute.Count == 0)
@@ -84,6 +87,10 @@ namespace DbUp.Engine
                 ex.Data.Add("Error occurred in script: ", executedScriptName);
                 configuration.Log.WriteError("Upgrade failed due to an unexpected exception:\r\n{0}", ex.ToString());
                 return new DatabaseUpgradeResult(executed, false, ex);
+            }
+            finally
+            {
+                configuration.LockManager.UnLock();
             }
         }
 

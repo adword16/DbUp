@@ -9,12 +9,20 @@ namespace DbUp.MySql
     /// </summary>
     public class MySqlConnectionManager : DatabaseConnectionManager
     {
+        private string _ConnectionString;
+
         /// <summary>
         /// Creates a new MySql database connection.
         /// </summary>
         /// <param name="connectionString">The MySql connection string.</param>
         public MySqlConnectionManager(string connectionString) : base(new DelegateConnectionFactory(l => new MySqlConnection(connectionString)))
         {
+            _ConnectionString = connectionString;
+        }
+
+        public string ConnectionString
+        {
+            get { return _ConnectionString; }
         }
 
         /// <summary>
