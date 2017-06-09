@@ -32,6 +32,19 @@ public static class MySqlExtensions
     }
 
     /// <summary>
+    /// Configures the mysqldatabase to lock the database, so that only one update can peformed at the same time
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns>A builder for a database upgrader designed for MySql databases.</returns>
+    public static UpgradeEngineBuilder WithDatabaseLock(this UpgradeEngineBuilder builder)
+    {
+        builder.Configure(c => c.LockManager = new MySqlLockManager(c));
+
+        return builder;
+    }
+
+
+    /// <summary>
     /// Creates an upgrader for MySql databases.
     /// </summary>
     /// <param name="supported">Fluent helper type.</param>
